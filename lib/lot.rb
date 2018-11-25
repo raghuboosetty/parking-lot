@@ -13,8 +13,9 @@ class Lot
   end
 
   def park(car_reg_number, car_colour)
-    next_nearest_slot = slots.find { |slot| slot.is_free? }
-    if next_nearest_slot
+    if !find_car_with_reg_number(car_reg_number).nil?
+      puts "Car already parked!"
+    elsif (next_nearest_slot = slots.find { |slot| slot.is_free? })
       next_nearest_slot.park(car_reg_number, car_colour)
       puts "Allocated slot number: #{next_nearest_slot.slot_number}"
     else
@@ -51,9 +52,7 @@ class Lot
   end
 
   def slot_number_for_registration_number(car_reg_number)
-    slot = slots.find do |slot|
-      slot.car_reg_number == car_reg_number
-    end
+    slot = find_car_with_reg_number(car_reg_number)
     puts slot ? slot.slot_number : 'Not found'
   end
 
@@ -62,5 +61,9 @@ class Lot
       slots.collect do |slot|
         slot.send(filtered_value) if slot.send(filter_by) == filter
       end
+    end
+
+    def find_car_with_reg_number(car_reg_number)
+      slots.find { |slot| slot.car_reg_number == car_reg_number }
     end
 end

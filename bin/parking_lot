@@ -22,7 +22,6 @@ def process!(input)
       when 'interactive'
         input_row = gets.chomp # take input from command line until 'exit'
         break if input_row == 'exit'
-      end
     end
 
     input_row_scliced = input_row.split(/\s/)
@@ -34,6 +33,7 @@ def process!(input)
       # calling instance methods dynamically
       lot.send(command, *([input_row_scliced[1], input_row_scliced[2]].compact))
     end
+
   end
 end
 
