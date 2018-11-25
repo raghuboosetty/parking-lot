@@ -36,6 +36,12 @@ Slot No.    Registration No    Colour
 EOTXT
 )
   end
-  
-  # pending "add more specs as needed"
+
+  it "should not park the car if already parked" do
+    command.write("park KA-01-HH-3141 Black\n")
+    command.write("park KA-01-HH-3141 Black\n")
+    stop_all_commands
+    expect(command.output).to end_with("Car already parked!\n")
+  end
+
 end
